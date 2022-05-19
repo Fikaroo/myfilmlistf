@@ -1,0 +1,18 @@
+.list-page {
+    padding: 42px calc(50% - 300px);
+}
+
+.list-page__title {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.list-page ul li {
+    font-size: 18px;
+}
+
+.list-page__subtitle {
+    margin-bottom: 12px;
+    font-size: 22px;
+    margin-left: 20px;
+}
