@@ -1,11 +1,10 @@
 import React from "react";
 import "./MovieItem.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addListMovie } from "../../redux/actions/actions";
 
 function MovieItem({ Title, Year, Poster, imdbID, disabled }) {
   const dispatch = useDispatch();
-  disabled = useSelector((state) => state.reducer.linkActive);
   return (
     <article className="movie-item">
       <img className="movie-item__poster" src={Poster} alt={Title} />

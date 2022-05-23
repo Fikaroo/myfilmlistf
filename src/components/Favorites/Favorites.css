@@ -27,7 +27,7 @@
 }
 
 .favorites__save:disabled {
-    background-color: #d3d3d3;
+  background-color: #d3d3d3;
 }
 
 .favorites__save:hover {
@@ -46,14 +46,14 @@
 }
 
 .favorites__list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
 }
 
 @media (min-width: 320px) and (max-width: 690px) {
-    .favorites {
-        text-align: center;
-    }
+  .favorites {
+    text-align: center;
+  }
 }
