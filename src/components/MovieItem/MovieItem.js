@@ -1,10 +1,11 @@
 import React from "react";
 import "./MovieItem.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addListMovie } from "../../redux/actions/actions";
 
 function MovieItem({ Title, Year, Poster, imdbID, disabled }) {
   const dispatch = useDispatch();
+  const linkActive = useSelector((state) => state.reducer.linkActive);
   return (
     <article className="movie-item">
       <img className="movie-item__poster" src={Poster} alt={Title} />
@@ -16,7 +17,7 @@ function MovieItem({ Title, Year, Poster, imdbID, disabled }) {
           type="button"
           className="movie-item__add-button"
           onClick={() => dispatch(addListMovie(imdbID))}
-          disabled={disabled}
+          disabled={disabled || linkActive}
         >
           Добавить в список
         </button>

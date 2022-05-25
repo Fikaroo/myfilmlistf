@@ -2,51 +2,41 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getPostMovies } from "../../redux/actions/actions";
 import "./ListPage.css";
 
 function ListPage(props) {
   const [title, setTitle] = useState("");
-  const [movies, setMovies] = useState([]);
+  const id = props.match.params.id;
+  const movies = useSelector((state) => state.reducer.postMovies);
+  const dispatch = useDispatch();
   useEffect(() => {
-    const apiKey = "23dbb244";
-    const id = props.match.params.id;
     axios
       .get(`https://acb-api.algoritmika.org/api/movies/list/${id}`)
       .then((res) => res.data)
       .then((data) => {
         setTitle(data.title);
-        data.movies.forEach((elem) => {
-          axios
-            .get(`http://www.omdbapi.com/?i=${elem}&apikey=${apiKey}`)
-            .then((res) => res.data)
-            .then((data) => {
-              setMovies([...movies, data]);
-            });
-        });
+        data.movies.forEach((imdbID) => dispatch(getPostMovies(imdbID)));
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <div className="list-page">
       <h1 className="list-page__title">{title}</h1>
       <ul>
-        {movies.map((item) => {
-          console.log(item);
-          return (
-            <li key={item.imdbID}>
-              <a
-                href={"https://www.imdb.com/title/" + item.imdbID}
-                className="link__block"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {item.Title} ({item.Year})
-              </a>
-            </li>
-          );
-        })}
+        {movies.map((item) => (
+          <li key={item[0].imdbID}>
+            <a
+              href={"https://www.imdb.com/title/" + item[0].imdbID}
+              className="link__block"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {item[0].Title} ({item[0].Year})
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   );

@@ -1,11 +1,13 @@
 import {
   ADD_MOVIES,
   ADD_MOVIE_TO_LIST,
+  ADD_POST_MOVIES,
   REMOVE_MOVIE_TO_LIST,
   SET_LINKACTIVE,
 } from "../actions/actions-type";
 
 const initialState = {
+  postMovies: [],
   linkActive: false,
   listMovies: [],
   movies: [],
@@ -29,7 +31,8 @@ export default (state = initialState, { type, payload }) => {
 
     case SET_LINKACTIVE:
       return { ...state, linkActive: payload };
-
+    case ADD_POST_MOVIES:
+      return { ...state, postMovies: [...state.postMovies, payload] };
     default:
       return state;
   }

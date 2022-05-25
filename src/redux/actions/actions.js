@@ -1,14 +1,27 @@
 import axios from "axios";
-import { baseUrl } from "../constants";
+import { baseUrl, apiKey } from "../constants";
 import {
   ADD_MOVIES,
   ADD_MOVIE_TO_LIST,
+  ADD_POST_MOVIES,
   REMOVE_MOVIE_TO_LIST,
   SET_LINKACTIVE,
 } from "./actions-type";
 
+export const getPostMovies = (imdbID) => {
+  return function (dispatch) {
+    let postMovies = [];
+    axios
+      .get(baseUrl + `?i=${imdbID}&apikey=${apiKey}`)
+      .then((res) => res.data)
+      .then((data) => {
+        postMovies = [...postMovies, data];
+        dispatch(addPostMovie(postMovies));
+      });
+  };
+};
+
 export const getMovies = async (searchLine) => {
-  const apiKey = "23dbb244";
   const res = await axios.get(baseUrl + `?s=${searchLine}&apikey=${apiKey}`);
   const data = res.data.Search;
   if (!data) {
@@ -34,5 +47,10 @@ export const removeListMovie = (payload) => ({
 
 export const setLinkActive = (payload) => ({
   type: SET_LINKACTIVE,
-  payload
-})
+  payload,
+});
+
+export const addPostMovie = (payload) => ({
+  type: ADD_POST_MOVIES,
+  payload,
+});
